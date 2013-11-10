@@ -10,6 +10,7 @@ import ch.boye.httpclientandroidlib.entity.mime.content.FileBody;
 import ch.boye.httpclientandroidlib.entity.mime.content.StringBody;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -36,6 +37,11 @@ public class MultipartRequest extends Request<String> {
         mFilePart = file;
         mStringPart = stringPart;
         buildMultipartEntity();
+        
+        setRetryPolicy(new DefaultRetryPolicy(
+                1000, 
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES, 
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
     }
 
     private void buildMultipartEntity()

@@ -97,7 +97,8 @@ public class MainActivity extends Activity {
 
 						@Override
 						public void onErrorResponse(VolleyError arg0) {
-							// TODO Auto-generated method stub
+							VolleyError x = arg0 ; 
+							x.toString();
 							
 						}
 					};
@@ -116,7 +117,7 @@ public class MainActivity extends Activity {
 						}
 					};
 					
-					MultipartRequest mr = new MultipartRequest("http://www.toast.net/mail/", el, l  , f, "1");
+					MultipartRequest mr = new MultipartRequest("http://revall.co/main/upload", el, l  , f, "resim");
 					
 					
 					
