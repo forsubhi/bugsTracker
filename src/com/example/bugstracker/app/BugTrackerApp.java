@@ -6,12 +6,14 @@ import android.app.Application;
 
 public class BugTrackerApp extends Application {
 
-	public static File imageFile;
+	public  File imageFile;
 	public static String reviewTitle;
 	public static String reviewBody;
 
+	
 	public static BugTrackerApp app ;
 
+	
 	@Override
 	public void onCreate() {
 		// TODO Auto-generated method stub

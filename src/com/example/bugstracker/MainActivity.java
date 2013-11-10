@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 import android.widget.RelativeLayout.LayoutParams;
 
 import com.example.bugstracker.app.BugTrackerApp;
@@ -27,10 +28,10 @@ public class MainActivity extends Activity {
 
 	private Button ReviewBtn;
 
-	public static File file;
-
 	private static final int CAMERA_REQUEST = 1888;
 
+	private static File file = null;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -50,7 +51,7 @@ public class MainActivity extends Activity {
 
 		Display display = getWindowManager().getDefaultDisplay();
 		int width = display.getWidth(); // deprecated
-		
+
 		ProductPhoto.setLayoutParams(new LayoutParams(width, width));
 
 		ReviewBtn.setOnClickListener(new View.OnClickListener() {
@@ -78,16 +79,23 @@ public class MainActivity extends Activity {
 		Intent cameraIntent = new Intent(
 				android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
 
-		file = new File(Environment.getExternalStorageDirectory()
-				+ File.separator + "test.tmp");
+		File dir = new File(Environment.getExternalStorageDirectory()
+				+ File.separator + "BilBil");
+		// You can't put file-seperator before "BilBil"
+
+		dir.mkdirs();
+
+		file = new File(dir, "test.png");
+
 		Uri imageUri = Uri.fromFile(file);
 
 		cameraIntent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT,
 				imageUri);
-		BugTrackerApp.imageFile = file;
 
-		startActivityForResult(cameraIntent, CAMERA_REQUEST);
 
+		
+
+        startActivityForResult(cameraIntent, CAMERA_REQUEST);
 	}
 
 	@Override
@@ -96,24 +104,14 @@ public class MainActivity extends Activity {
 
 		if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
 
-			File dir = new File(Environment.getExternalStorageDirectory() + File.separator + "BilBil");
-			try {
-				dir.createNewFile();
-			} catch (IOException e) {
 
-				e.printStackTrace();
-			}
-			
-			
-			//
 			file = new File(Environment.getExternalStorageDirectory()
-					+ File.separator + "BilBil" + File.separator + "test.tmp");
+					+ File.separator + "BilBil" + File.separator + "test.png");
 
 			Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
 			ProductPhoto.setImageBitmap(bitmap);
 
-			BugTrackerApp.imageFile = file;
-
+			ReviewAct.imageFile = file;
 		}
 	}
 

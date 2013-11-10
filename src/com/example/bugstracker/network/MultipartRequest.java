@@ -15,6 +15,7 @@ import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyLog;
+import com.example.bugstracker.MainActivity;
 import com.example.bugstracker.app.BugTrackerApp;
 
 
@@ -28,11 +29,13 @@ public class MultipartRequest extends Request<String> {
     private static final String REVIEW_BODY_PART_NAME = "data";
 
     private final Response.Listener<String> mListener;
-
-    public MultipartRequest(String url, Response.ErrorListener errorListener, Response.Listener<String> listener)
+    private File mImageFile = null;
+    
+    public MultipartRequest(String url, Response.ErrorListener errorListener, Response.Listener<String> listener, File imageFile)
     {
         super(Method.POST, url, errorListener);
         mListener = listener;
+        mImageFile = imageFile;
         
         buildMultipartEntity();
         
@@ -45,12 +48,9 @@ public class MultipartRequest extends Request<String> {
     private void buildMultipartEntity()
     {
     	
-    	BugTrackerApp.imageFile.renameTo(new File(BugTrackerApp.imageFile.getAbsolutePath().replace(".tmp", ".png")));
-
-    	entity.addPart(FILE_PART_NAME, new FileBody(BugTrackerApp.imageFile));
-
-    	BugTrackerApp.imageFile.renameTo(new File(BugTrackerApp.imageFile.getAbsolutePath().replace(".png", ".tmp")));
-
+    	
+    	entity.addPart(FILE_PART_NAME, new FileBody(mImageFile));
+    	
     	try
         {
             entity.addPart(REVIEW_TITLE_PART_NAME,new StringBody(BugTrackerApp.reviewTitle));
