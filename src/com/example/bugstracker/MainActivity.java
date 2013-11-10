@@ -15,6 +15,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Display;
 import android.view.Menu;
 import android.view.View;
@@ -112,9 +113,12 @@ public class MainActivity extends Activity {
 		//	Bitmap photo = (Bitmap) data.getExtras().get("data");
 
 			// read image from file
-			Bitmap bitmap = BitmapFactory.decodeFile(BugTrackerApp.app.file.getAbsolutePath());
-			ProductPhoto.setImageBitmap(bitmap);
-			ReviewAct.ImageFile = file;
+			
+			file = new File(Environment.getExternalStorageDirectory()
+					+ File.separator + "test.png");
+			Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+		 	ProductPhoto.setImageBitmap(bitmap);
+		 	ReviewAct.ImageFile = file;
 
 		}
 	}
