@@ -1,35 +1,23 @@
 package com.example.bugstracker;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 
-import android.R.integer;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.MediaStore;
-import android.util.Log;
 import android.view.Display;
 import android.view.Menu;
 import android.view.View;
-import android.widget.RelativeLayout.LayoutParams;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout.LayoutParams;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.Response.ErrorListener;
-import com.android.volley.Response.Listener;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.Volley;
 import com.example.bugstracker.app.BugTrackerApp;
-import com.example.bugstracker.network.MultipartRequest;
 
 public class MainActivity extends Activity {
 
@@ -62,8 +50,7 @@ public class MainActivity extends Activity {
 
 		Display display = getWindowManager().getDefaultDisplay();
 		int width = display.getWidth(); // deprecated
-		int height = display.getHeight(); // deprecated
-
+		
 		ProductPhoto.setLayoutParams(new LayoutParams(width, width));
 
 		ReviewBtn.setOnClickListener(new View.OnClickListener() {
@@ -92,13 +79,13 @@ public class MainActivity extends Activity {
 				android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
 
 		file = new File(Environment.getExternalStorageDirectory()
-				+ File.separator + "test.png");
+				+ File.separator + "test.tmp");
 		Uri imageUri = Uri.fromFile(file);
 
 		cameraIntent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT,
 				imageUri);
-		BugTrackerApp.app.file =file ; 
-		
+		BugTrackerApp.imageFile = file;
+
 		startActivityForResult(cameraIntent, CAMERA_REQUEST);
 
 	}
@@ -109,16 +96,23 @@ public class MainActivity extends Activity {
 
 		if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
 
-			// this is small image (thumbnail)
-		//	Bitmap photo = (Bitmap) data.getExtras().get("data");
+			File dir = new File(Environment.getExternalStorageDirectory() + File.separator + "BilBil");
+			try {
+				dir.createNewFile();
+			} catch (IOException e) {
 
-			// read image from file
+				e.printStackTrace();
+			}
 			
+			
+			//
 			file = new File(Environment.getExternalStorageDirectory()
-					+ File.separator + "test.png");
+					+ File.separator + "BilBil" + File.separator + "test.tmp");
+
 			Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
-		 	ProductPhoto.setImageBitmap(bitmap);
-		 	ReviewAct.ImageFile = file;
+			ProductPhoto.setImageBitmap(bitmap);
+
+			BugTrackerApp.imageFile = file;
 
 		}
 	}

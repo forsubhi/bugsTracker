@@ -24,19 +24,16 @@ public class MultipartRequest extends Request<String> {
     private MultipartEntity entity = new MultipartEntity();
 
     private static final String FILE_PART_NAME = "resim";
-    private static final String STRING_PART_NAME = "text";
+    private static final String REVIEW_TITLE_PART_NAME = "subject";
+    private static final String REVIEW_BODY_PART_NAME = "data";
 
     private final Response.Listener<String> mListener;
-    private final File mFilePart;
-    private final String mStringPart;
 
-    public MultipartRequest(String url, Response.ErrorListener errorListener, Response.Listener<String> listener, File file, String stringPart)
+    public MultipartRequest(String url, Response.ErrorListener errorListener, Response.Listener<String> listener)
     {
         super(Method.POST, url, errorListener);
-
         mListener = listener;
-        mFilePart = file;
-        mStringPart = stringPart;
+        
         buildMultipartEntity();
         
         setRetryPolicy(new DefaultRetryPolicy(
@@ -47,12 +44,17 @@ public class MultipartRequest extends Request<String> {
 
     private void buildMultipartEntity()
     {
-        entity.addPart(FILE_PART_NAME, new FileBody(mFilePart));
-        try
+    	
+    	BugTrackerApp.imageFile.renameTo(new File(BugTrackerApp.imageFile.getAbsolutePath().replace(".tmp", ".png")));
+
+    	entity.addPart(FILE_PART_NAME, new FileBody(BugTrackerApp.imageFile));
+
+    	BugTrackerApp.imageFile.renameTo(new File(BugTrackerApp.imageFile.getAbsolutePath().replace(".png", ".tmp")));
+
+    	try
         {
-            entity.addPart(STRING_PART_NAME, new StringBody(mStringPart));
-            entity.addPart("reviewTitle",new StringBody(BugTrackerApp.reviewTitle));
-            entity.addPart("reviewBody",new StringBody(BugTrackerApp.reviewBody));
+            entity.addPart(REVIEW_TITLE_PART_NAME,new StringBody(BugTrackerApp.reviewTitle));
+            entity.addPart(REVIEW_BODY_PART_NAME, new StringBody(BugTrackerApp.reviewBody));
         }
         catch (UnsupportedEncodingException e)
         {
