@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class ReviewAct extends Activity {
 
@@ -59,7 +60,7 @@ public class ReviewAct extends Activity {
 			public void onErrorResponse(VolleyError arg0) {
 				VolleyError x = arg0 ; 
 				x.toString();
-				
+				Toast.makeText(BugTrackerApp.app, "Your image not uploaded. Something wrong ", Toast.LENGTH_SHORT).show();
 			}
 		};
 		
@@ -70,9 +71,9 @@ public class ReviewAct extends Activity {
 
 
 				
-				String x = arg0;
 				
-				x.toString();
+				Toast.makeText(BugTrackerApp.app, "Your image uploaded. ", Toast.LENGTH_SHORT).show();
+				
 				
 			}
 		};
@@ -91,6 +92,8 @@ public class ReviewAct extends Activity {
 		
 		RequestQueue queue = Volley.newRequestQueue(this);
 		
+		
+		Toast.makeText(this, "Now your image is uploading ... ", Toast.LENGTH_SHORT).show();
 		queue.add(mr);
 	
 		
