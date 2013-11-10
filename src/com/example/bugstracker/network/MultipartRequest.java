@@ -21,7 +21,7 @@ public class MultipartRequest extends Request<String> {
 
     private MultipartEntity entity = new MultipartEntity();
 
-    private static final String FILE_PART_NAME = "file";
+    private static final String FILE_PART_NAME = "resim";
     private static final String STRING_PART_NAME = "text";
 
     private final Response.Listener<String> mListener;
