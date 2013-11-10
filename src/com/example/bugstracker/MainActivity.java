@@ -5,27 +5,33 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import com.android.volley.Response.ErrorListener;
-import com.android.volley.Response.Listener;
-import com.android.volley.toolbox.Volley;
-import com.android.volley.RequestQueue;
-import com.android.volley.VolleyError;
-import com.example.bugstracker.network.MultipartRequest;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Environment;
+import android.view.Display;
 import android.view.Menu;
 import android.view.View;
+import android.widget.RelativeLayout.LayoutParams;
+import android.widget.Button;
 import android.widget.ImageView;
+
+import com.android.volley.RequestQueue;
+import com.android.volley.Response.ErrorListener;
+import com.android.volley.Response.Listener;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.Volley;
+import com.example.bugstracker.network.MultipartRequest;
 
 public class MainActivity extends Activity {
 
 	private View TakePhotoBtn;
 
 	private ImageView ProductPhoto;
+
+	private Button ReviewBtn;
 
 	private static final int CAMERA_REQUEST = 1888;
 	@Override
@@ -34,6 +40,7 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		TakePhotoBtn  =  findViewById(R.id.TakePhotoBtn);
 		ProductPhoto = (ImageView)   findViewById(R.id.ProductPhoto);
+		ReviewBtn   =   (Button)	findViewById(R.id.ReviewBtn);
 		
 		
 		TakePhotoBtn.setOnClickListener(new View.OnClickListener() {
@@ -44,6 +51,26 @@ public class MainActivity extends Activity {
 				
 			}
 		});
+		
+		Display display = getWindowManager().getDefaultDisplay(); 
+		int width = display.getWidth();  // deprecated
+		int height = display.getHeight();  // deprecated
+		
+		
+		
+		ProductPhoto.setLayoutParams(new LayoutParams(width, width));
+		
+		ReviewBtn.setOnClickListener(new  View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+			Intent intent = new Intent(MainActivity.this,ReviewAct.class);
+			
+			startActivity(intent);
+				
+			}
+		});
+		
 	}
 
 	@Override
@@ -93,37 +120,8 @@ public class MainActivity extends Activity {
 					//write the bytes in file
 					
 					
-					ErrorListener el = new ErrorListener() {
-
-						@Override
-						public void onErrorResponse(VolleyError arg0) {
-							VolleyError x = arg0 ; 
-							x.toString();
-							
-						}
-					};
+					ReviewAct.ImageFile = f;
 					
-					Listener<String> l  = new Listener<String>() {
-
-						@Override
-						public void onResponse(String arg0) {
-
-
-							
-							String x = arg0;
-							
-							x.toString();
-							
-						}
-					};
-					
-					MultipartRequest mr = new MultipartRequest("http://revall.co/main/upload", el, l  , f, "resim");
-					
-					
-					
-					RequestQueue queue = Volley.newRequestQueue(this);
-					
-					queue.add(mr);
 				
 					
 			}}

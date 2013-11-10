@@ -15,6 +15,7 @@ import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyLog;
+import com.example.bugstracker.app.BugTrackerApp;
 
 
 
@@ -50,6 +51,8 @@ public class MultipartRequest extends Request<String> {
         try
         {
             entity.addPart(STRING_PART_NAME, new StringBody(mStringPart));
+            entity.addPart("reviewTitle",new StringBody(BugTrackerApp.reviewTitle));
+            entity.addPart("reviewBody",new StringBody(BugTrackerApp.reviewBody));
         }
         catch (UnsupportedEncodingException e)
         {

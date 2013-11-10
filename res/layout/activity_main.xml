@@ -11,17 +11,34 @@
     <ImageView
         android:id="@+id/ProductPhoto"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="200dp"
         android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
         android:src="@drawable/image_template" />
     
-    <Button
-        android:id="@+id/TakePhotoBtn"
-        android:layout_centerHorizontal="true"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+      
+        android:orientation="horizontal" >
+
+    <Button
+        android:id="@+id/TakePhotoBtn"
+      android:layout_alignParentLeft="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+      
         android:text="Take a photo" />
+    
+     <Button
+        
+        android:id="@+id/ReviewBtn"
+     android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+      
+        android:text="Review" />
+    
+    </RelativeLayout>
 
 </RelativeLayout>
