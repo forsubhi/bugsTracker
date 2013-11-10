@@ -95,6 +95,7 @@ public class ReviewAct extends Activity {
 		
 		Toast.makeText(this, "Now your image is uploading ... ", Toast.LENGTH_SHORT).show();
 		queue.add(mr);
+		finish();
 	
 		
 	}
