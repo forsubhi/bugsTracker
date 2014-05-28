@@ -28,10 +28,12 @@ public class MainActivity extends Activity {
 
 	private Button ReviewBtn;
 
+	boolean CameraCaptureCalled = false;
+
 	private static final int CAMERA_REQUEST = 1888;
 
 	private static File file = null;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -79,23 +81,17 @@ public class MainActivity extends Activity {
 		Intent cameraIntent = new Intent(
 				android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
 
-		File dir = new File(Environment.getExternalStorageDirectory()
-				+ File.separator + "BilBil");
-		// You can't put file-seperator before "BilBil"
+	
 
-		dir.mkdirs();
-
-		file = new File(dir, "test.png");
+		file = new File(Environment.getExternalStorageDirectory()
+				+ File.separator+ "test.png");
 
 		Uri imageUri = Uri.fromFile(file);
 
 		cameraIntent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT,
 				imageUri);
 
-
-		
-
-        startActivityForResult(cameraIntent, CAMERA_REQUEST);
+		startActivityForResult(cameraIntent, CAMERA_REQUEST);
 	}
 
 	@Override
@@ -104,15 +100,28 @@ public class MainActivity extends Activity {
 
 		if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
 
-
 			file = new File(Environment.getExternalStorageDirectory()
-					+ File.separator + "BilBil" + File.separator + "test.png");
+					+ File.separator+ "test.png");
 
 			Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
 			ProductPhoto.setImageBitmap(bitmap);
 
-			ReviewAct.imageFile = file;
+			CameraCaptureCalled = true;
+			
+			 ReviewAct.ImageFile = file;
+
 		}
+	}
+
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+
+		if (!CameraCaptureCalled)
+			ProductPhoto.setImageBitmap(null);
+
+		CameraCaptureCalled = false;
 	}
 
 }

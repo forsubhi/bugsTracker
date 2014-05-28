@@ -25,7 +25,7 @@ public class MultipartRequest extends Request<String> {
     private MultipartEntity entity = new MultipartEntity();
 
     private static final String FILE_PART_NAME = "resim";
-    private static final String REVIEW_TITLE_PART_NAME = "subject";
+    private static final String REVIEW_TITLE_PART_NAME = "title";
     private static final String REVIEW_BODY_PART_NAME = "data";
 
     private final Response.Listener<String> mListener;
@@ -40,7 +40,7 @@ public class MultipartRequest extends Request<String> {
         buildMultipartEntity();
         
         setRetryPolicy(new DefaultRetryPolicy(
-                1000, 
+                10000, 
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES, 
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
     }

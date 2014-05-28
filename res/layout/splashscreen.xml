@@ -1,19 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+      android:paddingBottom="52dp"
+    android:paddingLeft="52dp"
+    android:paddingRight="52dp"
+    android:paddingTop="52dp"
+     >
 
     <ImageView
         android:id="@+id/splashscreen"
-        android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:src="@drawable/splash" />
+        
+        android:src="@drawable/logo_small" />
 
     <TextView
+        android:layout_alignParentBottom="true"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World, splash" />
+        android:text="Bil-Bil" 
+        android:textSize="44sp"
+        android:gravity="center"
+        android:layout_marginBottom="10dp"
+        />
 
-</LinearLayout>
+</RelativeLayout>

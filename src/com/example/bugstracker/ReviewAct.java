@@ -20,7 +20,8 @@ import com.example.bugstracker.network.MultipartRequest;
 
 public class ReviewAct extends Activity {
 
-	public static File imageFile;
+	
+	public static File ImageFile;
 	private EditText ReviewTitle;
 	private EditText ReviewBody;
 
@@ -76,11 +77,9 @@ public class ReviewAct extends Activity {
 		BugTrackerApp.reviewTitle = ReviewTitle.getText().toString();
 		BugTrackerApp.reviewBody = ReviewBody.getText().toString();
 		
-		BugTrackerApp app = (BugTrackerApp)getApplication();
-		app.imageFile = ReviewAct.imageFile;
 		
 		MultipartRequest mr = new MultipartRequest(
-				"http://revall.co/main/upload", errorListener, responseListener, imageFile);
+				"http://revall.co/main/upload", errorListener, responseListener, ImageFile);
 
 		RequestQueue queue = Volley.newRequestQueue(this);
 
